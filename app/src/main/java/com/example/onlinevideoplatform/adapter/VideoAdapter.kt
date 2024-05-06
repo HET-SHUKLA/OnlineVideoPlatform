@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.onlinevideoplatform.R
 import com.example.onlinevideoplatform.model.VideoModel
 
-class VideoAdapter(private val context:Context, private val videos:ArrayList<VideoModel>):
+class VideoAdapter(private val context:Context, private val videos:List<VideoModel>):
     RecyclerView.Adapter<VideoAdapter.VideoHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.VideoHolder {

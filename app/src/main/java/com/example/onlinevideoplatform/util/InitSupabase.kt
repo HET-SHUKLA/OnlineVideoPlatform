@@ -1,5 +1,6 @@
 package com.example.onlinevideoplatform.util
 
+import com.example.onlinevideoplatform.BuildConfig
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 
