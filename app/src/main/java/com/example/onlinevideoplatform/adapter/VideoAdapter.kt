@@ -31,6 +31,10 @@ class VideoAdapter(private val context:Context, private val videos:List<VideoMod
 
         //Setting up the thumbnail
         setThumbnail(current, holder)
+
+        holder.ll.setOnClickListener {
+
+        }
     }
 
     private fun setThumbnail(current: VideoModel, holder: VideoHolder) {
