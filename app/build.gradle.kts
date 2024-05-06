@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -14,8 +17,13 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val properties = Properties()
+        properties.load(FileInputStream(rootProject.file("local.properties")))
+
+        buildConfigField ("String", "SUPABASE_URL", properties.getProperty("SUPABASE_URL"))
+        buildConfigField ("String", "SUPABASE_KEY", properties.getProperty("SUPABASE_KEY"))
     }
 
     buildTypes {
@@ -27,6 +35,11 @@ android {
             )
         }
     }
+    buildFeatures{
+        buildConfig = true
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
