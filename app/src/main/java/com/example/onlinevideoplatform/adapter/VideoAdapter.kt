@@ -1,6 +1,7 @@
 package com.example.onlinevideoplatform.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.media.MediaMetadataRetriever
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.onlinevideoplatform.IndividualVideoActivity
 import com.example.onlinevideoplatform.R
 import com.example.onlinevideoplatform.model.VideoModel
 
@@ -33,7 +35,10 @@ class VideoAdapter(private val context:Context, private val videos:List<VideoMod
         setThumbnail(current, holder)
 
         holder.ll.setOnClickListener {
-
+            val i = Intent(context, IndividualVideoActivity::class.java)
+            i.putExtra("videoId", current.VIDEO_LINK)
+            i.putExtra("channelId", current.CHANNEL_ID)
+            context.startActivity(i)
         }
     }
 
