@@ -10,7 +10,52 @@
     <VideoView
         android:id="@+id/vv_ind_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_250sdp"
         android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_video_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_17ssp"
+        android:layout_margin="@dimen/_5sdp"
+        android:text="Video Name, Video ,Viudeo Vjh bxvdsf sdfsdf sdf "/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/tv_video_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_14ssp"
+            android:text="Video Name "/>
+
+        <TextView
+            android:id="@+id/tv_video_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_14ssp"
+            android:text="Video Name"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_channel_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14ssp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:text="Video Name, Video ,Viudeo Vjh bxvdsf sdfsdf sdf "/>
+
+    <TextView
+        android:id="@+id/tv_video_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14ssp"
+        android:layout_marginHorizontal="@dimen/_5sdp"
+        android:text="Video Name, Video ,Viudeo Vjh bxvdsf sdfsdf sdf "/>
 
 </LinearLayout>

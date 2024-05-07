@@ -36,8 +36,10 @@ class VideoAdapter(private val context:Context, private val videos:List<VideoMod
 
         holder.ll.setOnClickListener {
             val i = Intent(context, IndividualVideoActivity::class.java)
-            i.putExtra("videoId", current.VIDEO_LINK)
+            i.putExtra("videoLink", current.VIDEO_LINK)
             i.putExtra("channelId", current.CHANNEL_ID)
+            i.putExtra("videoId", current.VIDEO_ID)
+            i.putExtra("videoTitle", current.VIDEO_NAME)
             context.startActivity(i)
         }
     }
