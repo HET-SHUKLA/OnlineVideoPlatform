@@ -1,8 +1,10 @@
 package com.example.onlinevideoplatform
 
+import android.media.MediaController2
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.MediaController
+import androidx.appcompat.app.AppCompatActivity
 import com.example.onlinevideoplatform.databinding.ActivityIndividualVideoBinding
 
 class IndividualVideoActivity : AppCompatActivity() {
@@ -15,10 +17,18 @@ class IndividualVideoActivity : AppCompatActivity() {
         setContentView(b.root)
 
         val vid = intent.getStringExtra("videoId")!!
-//        val ch = intent.getStringExtra("channelId")!!
+        val ch = intent.getIntExtra("channelId",0)
 
+        val mediaController = MediaController(this)
+        mediaController.setAnchorView(b.vvIndView)
+
+        b.vvIndView.setMediaController(mediaController)
         b.vvIndView.setVideoURI(Uri.parse(vid))
         b.vvIndView.start()
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (b.vvIndView.isPlaying) outState.putInt("pos", b.vvIndView.currentPosition)
     }
 }
