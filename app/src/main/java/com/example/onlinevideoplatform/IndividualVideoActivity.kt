@@ -1,6 +1,6 @@
 package com.example.onlinevideoplatform
 
-import android.media.MediaController2
+import android.R.attr.path
 import android.net.Uri
 import android.os.Bundle
 import android.widget.MediaController
@@ -10,14 +10,11 @@ import com.example.onlinevideoplatform.databinding.ActivityIndividualVideoBindin
 import com.example.onlinevideoplatform.model.ChannelModel
 import com.example.onlinevideoplatform.model.LikeDislikeModel
 import com.example.onlinevideoplatform.model.VideoDetailModel
-import com.example.onlinevideoplatform.model.VideoModel
 import com.example.onlinevideoplatform.util.InitSupabase
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
-import io.github.jan.supabase.postgrest.query.Count
-import io.github.jan.supabase.postgrest.query.PostgrestRequestBuilder
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
+
 
 class IndividualVideoActivity : AppCompatActivity() {
 
@@ -83,15 +80,28 @@ class IndividualVideoActivity : AppCompatActivity() {
             }
             .decodeList<ChannelModel>()
 
-        b.tvVideoDescription?.text = videos[0].DESCRIPTION
-        b.tvVideoLike?.text = likes.toString()
-        b.tvVideoDislike?.text = dislikes.toString()
-        b.tvChannelTitle?.text = channelName[0].CHANNEL_NAME
+        b.tvVideoDescription?.text = "Description \n ${videos[0].DESCRIPTION}"
+        b.tvVideoLike?.text = "Likes : ${likes.toString()}"
+        b.tvVideoDislike?.text = "Dislikes : ${dislikes.toString()}"
+        b.tvChannelTitle?.text = "Channel : ${channelName[0].CHANNEL_NAME}"
 
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if (b.vvIndView.isPlaying) outState.putInt("pos", b.vvIndView.currentPosition)
+
+        // Save the playback position
+        outState.putInt("position", b.vvIndView.currentPosition)
+        outState.putBoolean("isPlaying", b.vvIndView.isPlaying)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        // Restore the playback position
+        b.vvIndView.seekTo(savedInstanceState.getInt("position"))
+        if (savedInstanceState.getBoolean("isPlaying")) {
+            b.vvIndView.start()
+        }
     }
 }

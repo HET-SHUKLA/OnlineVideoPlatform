@@ -29,7 +29,10 @@ class VideoAdapter(private val context:Context, private val videos:List<VideoMod
 
         val current = videos[position]
 
+
         holder.title.text = current.VIDEO_NAME
+
+        holder.info.visibility = View.GONE
 
         //Setting up the thumbnail
         setThumbnail(current, holder)

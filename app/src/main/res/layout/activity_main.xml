@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
     <EditText
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:inputType="text"
+        android:textColor="@color/black"
         android:maxLength="50"
         android:layout_marginTop="20dp"
         android:hint="@string/search"/>

@@ -18,8 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_17ssp"
-        android:layout_margin="@dimen/_5sdp"
-        android:text="Video Name, Video ,Viudeo Vjh bxvdsf sdfsdf sdf "/>
+        android:layout_margin="@dimen/_5sdp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,15 +29,14 @@
             android:id="@+id/tv_video_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_14ssp"
-            android:text="Video Name "/>
+            android:textSize="@dimen/_14ssp"/>
 
         <TextView
             android:id="@+id/tv_video_dislike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_14ssp"
-            android:text="Video Name"/>
+            android:layout_marginStart="@dimen/_10sdp"/>
 
     </LinearLayout>
 
@@ -47,15 +45,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_14ssp"
-        android:layout_marginHorizontal="@dimen/_5sdp"
-        android:text="Video Name, Video ,Viudeo Vjh bxvdsf sdfsdf sdf "/>
-
+        android:layout_marginHorizontal="@dimen/_5sdp"/>
     <TextView
         android:id="@+id/tv_video_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/_14ssp"
-        android:layout_marginHorizontal="@dimen/_5sdp"
-        android:text="Video Name, Video ,Viudeo Vjh bxvdsf sdfsdf sdf "/>
+        android:layout_marginHorizontal="@dimen/_5sdp"/>
 
 </LinearLayout>
