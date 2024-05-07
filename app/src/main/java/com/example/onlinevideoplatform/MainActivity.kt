@@ -1,9 +1,11 @@
 package com.example.onlinevideoplatform
 
-import androidx.appcompat.app.AppCompatActivity
+import android.R.attr
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.onlinevideoplatform.adapter.VideoAdapter
@@ -12,7 +14,7 @@ import com.example.onlinevideoplatform.model.VideoModel
 import com.example.onlinevideoplatform.util.InitSupabase
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.launch
-import kotlin.math.log
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var b:ActivityMainBinding
 
     //Array and adapter to store video info
-    private lateinit var videos:List<VideoModel>
+    private lateinit var videos:MutableList<VideoModel>
     private lateinit var videoAdapter:VideoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,20 +36,28 @@ class MainActivity : AppCompatActivity() {
             fetchVideos()
         }
 
+        b.edtSearchMain.doOnTextChanged { text, start, before, count ->
+            filterVideo(text.toString())
+        }
+    }
 
+    private fun filterVideo(query: String) {
+        val video = videos.filter { video ->
+            video.VIDEO_NAME.contains(query, ignoreCase = true)
+        }
 
+        videoAdapter = VideoAdapter(this, video)
+        b.rvMainAct.adapter = videoAdapter
     }
 
     private suspend fun fetchVideos() {
-        val videos = InitSupabase.supabase
-            .from("VIDEO_MASTER")
-            .select().decodeList<VideoModel>()
+         videos = InitSupabase.supabase
+             .from("VIDEO_MASTER")
+             .select().decodeList<VideoModel>().toMutableList()
 
-        Log.d("ERROR_POSTGRES", videos[0].VIDEO_NAME)
         videoAdapter = VideoAdapter(this, videos)
         b.rvMainAct.layoutManager = LinearLayoutManager(this)
         b.rvMainAct.adapter = videoAdapter
-        videoAdapter.notifyItemInserted(videos.size)
     }
 
     private fun initialize() {
@@ -55,9 +65,12 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        videos = ArrayList()
         //Init Recycler View and assign layout manager
 
-        //assign adapter to recycler view
+
+
+    //assign adapter to recycler view
 
     }
 }
