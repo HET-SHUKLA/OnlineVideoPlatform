@@ -30,8 +30,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var videoAdapter:VideoAdapter
     private lateinit var videoDetail:MutableList<VideoDetailModel>
 
-    private var flag = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,11 +37,10 @@ class MainActivity : AppCompatActivity() {
         initialize()
 
         //Fetch Videos into videos array list
-        if(!flag) {
-            lifecycleScope.launch {
-                fetchVideos()
-            }
+        lifecycleScope.launch {
+            fetchVideos()
         }
+
 
         b.edtSearchMain.doOnTextChanged { text, start, before, count ->
             filterVideo(text.toString())
@@ -102,8 +99,6 @@ class MainActivity : AppCompatActivity() {
             videoAdapter = VideoAdapter(this, videoDetail)
             b.rvMainAct.layoutManager = LinearLayoutManager(this)
             b.rvMainAct.adapter = videoAdapter
-
-            flag = true
         }
     }
 
