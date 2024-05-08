@@ -5,7 +5,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class VideoDetailModel(
 
-    val CREATED_AT:String,
-    val DESCRIPTION: String
+    val videoModel: VideoModel,
+    val likes: Int,
+    val disLike: Int,
+    val channelModel: ChannelModel
 
 )

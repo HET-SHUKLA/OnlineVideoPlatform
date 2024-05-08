@@ -10,6 +10,7 @@ import com.example.onlinevideoplatform.databinding.ActivityIndividualVideoBindin
 import com.example.onlinevideoplatform.model.ChannelModel
 import com.example.onlinevideoplatform.model.LikeDislikeModel
 import com.example.onlinevideoplatform.model.VideoDetailModel
+import com.example.onlinevideoplatform.model.VideoInfo
 import com.example.onlinevideoplatform.util.InitSupabase
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Columns
@@ -26,14 +27,19 @@ class IndividualVideoActivity : AppCompatActivity() {
         setContentView(b.root)
 
         val vLink = intent.getStringExtra("videoLink")!!
-        val ch = intent.getIntExtra("channelId",0)
         val vid = intent.getIntExtra("videoId", 0)
         val vName = intent.getStringExtra("videoTitle")!!
+        val chName = intent.getStringExtra("channelName")!!
+        val likes = intent.getIntExtra("likes",0)
+        val dislikes = intent.getIntExtra("dislikes",0)
 
         b.tvVideoTitle?.text = vName
+        b.tvVideoLike?.text = "Likes : $likes"
+        b.tvVideoDislike?.text = "Dislikes : $dislikes"
+        b.tvChannelTitle?.text = "Channel : $chName"
 
         lifecycleScope.launch {
-            fetchVideoInformation(ch, vid)
+            fetchVideoInformation(vid)
         }
 
         val mediaController = MediaController(this)
@@ -44,7 +50,7 @@ class IndividualVideoActivity : AppCompatActivity() {
         b.vvIndView.start()
     }
 
-    private suspend fun fetchVideoInformation(ch:Int, vid:Int) {
+    private suspend fun fetchVideoInformation(vid:Int) {
         val videos = InitSupabase.supabase
             .from("VIDEO_DETAIL")
             .select(columns = Columns.list("CREATED_AT","DESCRIPTION")) {
@@ -52,38 +58,10 @@ class IndividualVideoActivity : AppCompatActivity() {
                     eq("ID", vid)
                 }
             }
-            .decodeList<VideoDetailModel>()
+            .decodeList<VideoInfo>()
 
-        val likeDislike = InitSupabase.supabase
-            .from("LIKE_DISLIKE")
-            .select(columns = Columns.list("IS_LIKE")) {
-                filter {
-                    eq("ID", vid)
-                }
-            }
-            .decodeList<LikeDislikeModel>()
-
-        val likes = likeDislike.count{
-            it.IS_LIKE
-        }
-
-        val dislikes = likeDislike.count{
-            !it.IS_LIKE
-        }
-
-        val channelName = InitSupabase.supabase
-            .from("CHANNEL_MASTER")
-            .select(columns = Columns.list("CHANNEL_NAME")) {
-                filter {
-                    eq("ID", ch)
-                }
-            }
-            .decodeList<ChannelModel>()
 
         b.tvVideoDescription?.text = "Description \n ${videos[0].DESCRIPTION}"
-        b.tvVideoLike?.text = "Likes : ${likes.toString()}"
-        b.tvVideoDislike?.text = "Dislikes : ${dislikes.toString()}"
-        b.tvChannelTitle?.text = "Channel : ${channelName[0].CHANNEL_NAME}"
 
     }
 

@@ -13,9 +13,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.onlinevideoplatform.IndividualVideoActivity
 import com.example.onlinevideoplatform.R
+import com.example.onlinevideoplatform.model.VideoDetailModel
 import com.example.onlinevideoplatform.model.VideoModel
 
-class VideoAdapter(private val context:Context, private val videos:List<VideoModel>):
+class VideoAdapter(private val context:Context, private val videos:List<VideoDetailModel>):
     RecyclerView.Adapter<VideoAdapter.VideoHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoAdapter.VideoHolder {
@@ -27,22 +28,28 @@ class VideoAdapter(private val context:Context, private val videos:List<VideoMod
 
     override fun onBindViewHolder(holder: VideoHolder, position: Int) {
 
-        val current = videos[position]
+        val videoModel = videos[position].videoModel
+        val channelModel = videos[position].channelModel
+        val likeDislike = videos[position]
 
 
-        holder.title.text = current.VIDEO_NAME
+        holder.title.text = videoModel.VIDEO_NAME
 
-        holder.info.visibility = View.GONE
+
+        holder.info.text = "Channel : ${channelModel.CHANNEL_NAME}\n" +
+                "Likes : ${likeDislike.likes} | Dislikes : ${likeDislike.disLike}"
 
         //Setting up the thumbnail
-        setThumbnail(current, holder)
+        setThumbnail(videoModel, holder)
 
         holder.ll.setOnClickListener {
             val i = Intent(context, IndividualVideoActivity::class.java)
-            i.putExtra("videoLink", current.VIDEO_LINK)
-            i.putExtra("channelId", current.CHANNEL_ID)
-            i.putExtra("videoId", current.VIDEO_ID)
-            i.putExtra("videoTitle", current.VIDEO_NAME)
+            i.putExtra("videoLink", videoModel.VIDEO_LINK)
+            i.putExtra("videoId", videoModel.VIDEO_ID)
+            i.putExtra("videoTitle", videoModel.VIDEO_NAME)
+            i.putExtra("channelName", channelModel.CHANNEL_NAME)
+            i.putExtra("likes", likeDislike.likes)
+            i.putExtra("dislikes", likeDislike.disLike)
             context.startActivity(i)
         }
     }
