@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var videoAdapter:VideoAdapter
     private lateinit var videoDetail:MutableList<VideoDetailModel>
 
+    private var flag = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,8 +39,10 @@ class MainActivity : AppCompatActivity() {
         initialize()
 
         //Fetch Videos into videos array list
-        lifecycleScope.launch {
-            fetchVideos()
+        if(!flag) {
+            lifecycleScope.launch {
+                fetchVideos()
+            }
         }
 
         b.edtSearchMain.doOnTextChanged { text, start, before, count ->
@@ -60,6 +64,7 @@ class MainActivity : AppCompatActivity() {
              .from("VIDEO_MASTER")
              .select().decodeList<VideoModel>().toMutableList()
 
+        //Fetching all the videos detail
         fetchVideoDetail(videos)
     }
 
@@ -97,6 +102,8 @@ class MainActivity : AppCompatActivity() {
             videoAdapter = VideoAdapter(this, videoDetail)
             b.rvMainAct.layoutManager = LinearLayoutManager(this)
             b.rvMainAct.adapter = videoAdapter
+
+            flag = true
         }
     }
 
@@ -107,11 +114,6 @@ class MainActivity : AppCompatActivity() {
 
         videos = ArrayList()
         videoDetail = ArrayList()
-        //Init Recycler View and assign layout manager
-
-
-
-    //assign adapter to recycler view
 
     }
 }

@@ -23,9 +23,11 @@ class IndividualVideoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //view binding
         b = ActivityIndividualVideoBinding.inflate(layoutInflater)
         setContentView(b.root)
 
+        //Getting intent values
         val vLink = intent.getStringExtra("videoLink")!!
         val vid = intent.getIntExtra("videoId", 0)
         val vName = intent.getStringExtra("videoTitle")!!
@@ -33,15 +35,18 @@ class IndividualVideoActivity : AppCompatActivity() {
         val likes = intent.getIntExtra("likes",0)
         val dislikes = intent.getIntExtra("dislikes",0)
 
+        //Setting values
         b.tvVideoTitle?.text = vName
         b.tvVideoLike?.text = "Likes : $likes"
         b.tvVideoDislike?.text = "Dislikes : $dislikes"
         b.tvChannelTitle?.text = "Channel : $chName"
 
         lifecycleScope.launch {
+            //fetching video information
             fetchVideoInformation(vid)
         }
 
+        //For video controls
         val mediaController = MediaController(this)
         mediaController.setAnchorView(b.vvIndView)
 
